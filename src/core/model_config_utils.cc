@@ -1033,6 +1033,16 @@ ValidateModelInput(
         "shape tensors are only supported for TensorRT platform");
   }
 
+  if (
+#ifdef TRTIS_ENABLE_CUSTOM
+      (platform != kCustomPlatform) &&
+#endif  // TRTIS_ENABLE_CUSTOM
+      io.allow_ragged_batch()) {
+    return Status(
+        RequestStatusCode::INVALID_ARG,
+        "ragged-batch input tensors are only supported for custom platform");
+  }
+
   return Status::Success;
 }
 
