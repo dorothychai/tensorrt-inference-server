@@ -395,6 +395,23 @@ GetRandomString(const int string_length)
   return random_string;
 }
 
+std::string
+ShapeVecToString(const std::vector<int64_t> shape_vec)
+{
+  bool first = true;
+  std::string str("[");
+  for (const auto& value : shape_vec) {
+    if (!first) {
+      str += ",";
+    }
+    str += std::to_string(value);
+    first = false;
+  }
+
+  str += "]";
+  return str;
+}
+
 template <>
 std::function<std::chrono::nanoseconds(std::mt19937&)>
 ScheduleDistribution<Distribution::POISSON>(const double request_rate)
